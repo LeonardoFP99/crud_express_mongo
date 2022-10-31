@@ -10,8 +10,10 @@ class ProductController {
 
     }
 
-    async index(){
+    async index(req, res){
+        const products = await ProductModel.find();
 
+        return res.status(200).json(products);
     }
 
     async show(){

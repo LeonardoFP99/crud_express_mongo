@@ -10,4 +10,6 @@ routes.get('/health', (req, res) => {
 
 routes.post('/products', ProductController.store);
 
+routes.get('/products', ProductController.index);
+
 module.exports = routes;
