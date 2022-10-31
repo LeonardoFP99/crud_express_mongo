@@ -26,12 +26,21 @@ class ProductController {
 
             return res.status(200).json(product);
         }catch(error){
-            return res.status(404).json({message: "Verify the product ID"});
+            return res.status(404).json({message: "Failed to list product"});
         }
 
     }
 
-    async update(){
+    async update(req, res){
+        try{
+            const { id } = req.params;
+
+            await ProductModel.findByIdAndUpdate(id, req.body);
+
+            return res.status(200).json({message: "Product updated"});
+        }catch(error){
+            return res.status(404).json({message: "Failed to update product"});
+        }
 
     }
 
