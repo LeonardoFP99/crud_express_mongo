@@ -12,4 +12,6 @@ routes.post('/products', ProductController.store);
 
 routes.get('/products', ProductController.index);
 
+routes.get('/products/:id', ProductController.show);
+
 module.exports = routes;
