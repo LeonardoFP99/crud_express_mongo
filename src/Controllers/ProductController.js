@@ -4,6 +4,19 @@ class ProductController {
 
     async store(req, res){
         try{
+
+            const {title, description, price} = req.body;
+
+            const productAlreadyExists = await ProductModel.findOne({ title });
+
+            if(productAlreadyExists){
+                return res.status(400).json({message: "This name already exists"});
+            }
+
+            if(!title || !description || !price){
+                return res.status(400).json({message: "Title, Description and Price is required"});
+            }
+
             const createdProduct = await ProductModel.create(req.body);
 
             return res.status(200).json(createdProduct);
@@ -41,7 +54,15 @@ class ProductController {
 
     async update(req, res){
         try{
+
             const { id } = req.params;
+            const { title } = req.body;
+
+            const productAlreadyExists = await ProductModel.findOne({ title });
+
+            if(productAlreadyExists && id != productAlreadyExists._id){
+                return res.status(400).json({message: "This name already exists"});
+            }
 
             await ProductModel.findByIdAndUpdate(id, req.body);
 
